@@ -10,19 +10,17 @@ tcÖĞÓĞ³É°ÙÉÏÇ§ÌõÃüÁî,È«²¿¿ì½İ¼üºÍÅäÖÃ¹¤¾ßÀ¸Î´ÃâÌ«ÀÛÁË,ºÜ¶àÃüÁîÒ²²»ÊÇÄÇÃ´³£ÓÃ,ÁÙÊ
 
 ²¢ÇÒ¿ÉÒÔ×Ô¶¨ÒåÍâĞÎ,×ÔĞĞÉè¼ÆÖ÷Ìâ
 
-![](https://raw.githubusercontent.com/hzncpa/pichost/main/img/%E6%90%9C%E7%B4%A2%E5%9B%BE.png)
+![](https://raw.githubusercontent.com/hzncpa/pichost/main/img/%E7%95%8C%E9%9D%A2%E6%BC%94%E7%A4%BA.png)
 
 
 
-# ÑİÊ¾
+# Êµ¼ÊÊ¹ÓÃÑİÊ¾
 
-ËÑË÷
+ËÑË÷,ÖØ¸´ÃüÁî,¸´ÖÆÃüÁîĞÅÏ¢
 
-![](https://raw.githubusercontent.com/hzncpa/pichost/main/img/%E6%90%9C%E7%B4%A2%E6%BC%94%E7%A4%BA.gif)
+![](https://raw.githubusercontent.com/hzncpa/pichost/main/img/%E6%BC%94%E7%A4%BA%E6%90%9C%E7%B4%A2%E6%89%A7%E8%A1%8C%E9%87%8D%E5%A4%8D%E5%A4%8D%E5%88%B6%E4%BF%A1%E6%81%AF.gif)
 
-ÖØ¸´
 
-![](https://raw.githubusercontent.com/hzncpa/pichost/main/img/%E6%89%A7%E8%A1%8C%E5%92%8C%E9%87%8D%E5%A4%8D.gif)
 
 # V1.1 2024-2-1
 
