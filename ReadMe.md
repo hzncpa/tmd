@@ -73,4 +73,4 @@ vim©иртжь╦╢ж╢ппиор╩лУцЭаН,хГ╫Яtmdр╡ж╖Ёжжь╦╢ж╢ппиор╩лУцЭаН,╠ххГtmdжпкякВак╫Би╒нд╪
 
 ## йж╤╞
 лМ╪си╬ЁЩсО╬Д╣╫autorun.cfg©ирт©╙╧ьвтфТ
-ShellExec "%COMMANDER_PATH%\Everything.exe"
+ShellExec "%COMMANDER_PATH%\TMD\TMD.exe"
