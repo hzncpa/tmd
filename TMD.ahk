@@ -157,7 +157,6 @@ else{
     ExitApp
 }
 }
-
 ;*************************************  ***********************
 	usercmd:=class_EasyIni(usercmd路径)
 	win:=class_EasyIni(wincmd路径)
@@ -179,21 +178,42 @@ else{
 
 ;tcmatch path
 
-if (!dllPath || !FileExist(dllPath)){
-	Loop Files,%com%\*.dll,R
+	;32 Default
+	if (A_PtrSize==4){
+
+	Loop Files,%COMMANDER_PATH%\*.dll
 		{
 		if (A_LoopFileName="tcmatch.dll"){
-			st.settings.dllPath:=dllPath :=A_LoopFileFullPath
-			st.settings.MatchFileW:=MatchFileW :=A_LoopFileDir "\TCMatch\MatchFileW"
-			st.save()
+			dllPath :=A_LoopFileFullPath
+			;IniWrite,%dllPath%, %A_Temp%\tmdhis.ini,settings,dllPath
+			MatchFileW :=A_LoopFileDir "\TCMatch\MatchFileW"
+			;IniWrite,%MatchFileW%, %A_Temp%\tmdhis.ini,settings,MatchFileW
 			}
 		}
+	if (!FileExist(dllPath)){
+	MsgBox,缺少32位的TCMatchdll
+	ExitApp
+	}
 }
 
-if (!FileExist(dllPath)){
-	MsgBox,没有32位的tcmtach`,群里下个吧哈哈哈
+	if (A_PtrSize==8){
+
+	Loop Files,%COMMANDER_PATH%\*.dll
+		{
+		if (A_LoopFileName="tcmatch64.dll"){
+			dllPath :=A_LoopFileFullPath
+			;IniWrite,%dllPath%, %A_Temp%\tmdhis.ini,settings,dllPath
+			MatchFileW :=A_LoopFileDir "\TCMatch64\MatchFileW"
+			;IniWrite,%MatchFileW%, %A_Temp%\tmdhis.ini,settings,MatchFileW
+			}
+		}
+	if (!FileExist(dllPath)){
+	MsgBox,缺少64位的TCMatchdll
 	ExitApp
+	}
 }
+
+
 OnMessage(0x5555, "MsgMonitor")
 return
 
@@ -208,7 +228,7 @@ match_cm_arr:
 		if (cm[sec]["Menu"]!="" && !RegExMatch(cm[sec]["Menu"],隐藏菜单规则)){
 			cm_want_all:=sec " " cm[sec]["Menu"]
 			cm_num:=cm_want_all . cm[sec]["num"]
-			Query:=RegExReplace(Query,"^:") ;del c:
+			Query:=RegExReplace(Query,"^[:;',./?，。：；“‘？、]") ;del c:
 			if (InStr(Query," ")){
 				Query_cm_arr := StrSplit(Query, " ")
 				for query_a,query_b in Query_cm_arr{
@@ -269,7 +289,7 @@ Refresh:
 	ControlGetText, Query, , ahk_id %SSK%
 	if (Query!=""){
 		;first try to match cm
-		if (RegExMatch(Query, "^:")){ ;the sigh of match cm
+		if (RegExMatch(Query, "^[:;',./?，。：；“‘？、]")){ ;the sigh of match cm
 			cm_mode_sigh:=1
 			gosub match_cm_arr
 			gosub update_listbox
@@ -283,7 +303,9 @@ Refresh:
 				GuiControl, ss:Choose, command,0
 		}
 	}else if (Query=""){
-				Showarr.Push(st.history.last A_Space "**the last command**")
+				IniRead,displaycmd,%temp%\tmdhis.ini,history,last
+				;Showarr.Push(st.history.last A_Space "**the last command**")
+				Showarr.Push(displaycmd A_Space "**the last command**")
 			for k,v in st.ding{
 				Showarr.Push(k A_Space v)
 			}
@@ -425,6 +447,8 @@ shellMessage(wParam, lParam) { ;接受系统窗口回调消息, 第一次是实�
 show_hook: ;add windows hook
 	xpos:=xpos+搜索框右移 , ypos:=ypos+搜索框下移
 	Gui, ss:show, AutoSize x%xpos% y%ypos%
+	;CoordMode,Mouse, Screen
+	MouseMove, -10, 0, 0,R
 	if (输入法英文)
 		switchime(1)
 	if (窗口切换自动关闭=1){
@@ -552,24 +576,31 @@ exec:
 	gosub Gui_Destroy
 	if (cm_mode_sigh!=1){
 		TC_EMC(command)
-		st.history.em:=1
-		st.history.last:=command
+		;st.history.em:=1
+		;st.history.last:=command
+		IniWrite,%command%, %A_Temp%\tmdhis.ini,history,last
+		IniWrite,1, %A_Temp%\tmdhis.ini,history,em
 }
 	else{
 		PostMessage,1075,%cm_num%, 0, , ahk_class TTOTAL_CMD
-		st.history.last:=cm_num
-		st.history.em:=0
+		;st.history.last:=cm_num
+		;st.history.em:=0
+		IniWrite,%cm_num%, %A_Temp%\tmdhis.ini,history,last
+		IniWrite,0, %A_Temp%\tmdhis.ini,history,em
 }
-	st.save()
+	;st.save()
 	gosub Gui_Destroy
 	WinActivate ahk_class TTOTAL_CMD
 return
 
 reexec:
-recmd:=st.history.last
-if (st.history.em==1){
+IniRead,recmd,%temp%\tmdhis.ini,history,last
+IniRead,execem,%temp%\tmdhis.ini,history,em
+;recmd:=st.history.last
+;if (st.history.em==1){
+if (execem==1){
 	TC_EMC(recmd)
-}else if (st.history.em==0){
+}else if (execem==0){
 		PostMessage,1075,%recmd%, 0, , ahk_class TTOTAL_CMD
 }
 return
